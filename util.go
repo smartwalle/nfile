@@ -54,3 +54,16 @@ func DirEmpty(path string) (bool, error) {
 	}
 	return false, err
 }
+
+// CreateDirIfNotExist 如果目录不存在则创建
+func CreateDirIfNotExist(path string) (bool, error) {
+	if exists, _ := DirExists(path); exists {
+		return true, nil
+	}
+
+	if err := os.MkdirAll(path, 0755); err != nil {
+		return false, err
+	}
+
+	return DirExists(path)
+}
